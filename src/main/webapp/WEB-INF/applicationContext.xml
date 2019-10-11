@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+          http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+          http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+<context:component-scan base-package="com.cards.controller,com.cards.service,com.cards.dao"/>
+<mvc:annotation-driven conversion-service="conversionService" validator="validator"/>
+
+<tx:annotation-driven transaction-manager="trMan"/>
+<!--resouces for different purposes-->
+<mvc:resources mapping="/js/**" location="/WEB-INF/jslib/"/>
+<mvc:resources mapping="/img/**" location="/WEB-INF/images/"/>
+<!--static view controllers for specific path-->
+<mvc:view-controller path="/" view-name="index"/>
+<mvc:view-controller path="/header" view-name="header"/>
+
+<!--converting datatypes to other formats and vice versa -->
+<bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean" >
+    <property name="formatters">
+        <set>
+            <bean class="com.cards.formatter.RequestsConverter"/>
+            <bean class="com.cards.formatter.BankApprovalConverter"/>
+            <bean class="com.cards.formatter.CardsConverter"/>
+            <bean class="com.cards.formatter.ClientsConverter"/>
+            <bean class="com.cards.formatter.EmployeesConverter"/>
+            <bean class="org.springframework.format.datetime.DateFormatter"
+            p:pattern="dd/MM/yyyy"/>
+        </set>
+    </property>
+</bean>
+
+<!--used for message validation-->
+<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+    <property name="validationMessageSource" ref="messageSource" />
+</bean>
+
+<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
+p:basename="classpath:i18n/messages"
+/>
+
+<mvc:interceptors>
+<!--intercepts every request and calls localeResolver and its setLocale method-->
+<bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"
+p:paramName="lang"
+/>
+</mvc:interceptors>
+
+<!--set locale in different ways (cookie, httpsession,...)-->
+<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver"
+p:defaultLocale="en"/>
+
+<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+p:location="classpath:db/jdbc.properties" 
+/>
+
+<!--resolve returned strings into jsp-->
+<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+p:prefix="/WEB-INF/jsp/"
+p:suffix=".jsp"
+/>
+
+<!--JPA config-->
+
+<bean id="datasource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+p:username="${username}"
+p:password="${password}"
+p:driverClassName="${driverClassName}"
+p:url="${url}"/>
+
+<bean id="vendor" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"
+p:generateDdl="false"
+p:showSql="true"
+/>
+
+<!--defines entity manager factory-->
+<bean id="emf" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+p:dataSource-ref="datasource"
+p:jpaVendorAdapter-ref="vendor"
+p:packagesToScan="com.cards.entity"
+/>
+
+<!--manages transaction-->
+<bean id="trMan" class="org.springframework.orm.jpa.JpaTransactionManager"
+p:entityManagerFactory-ref="emf"
+/>
+
+</beans>
