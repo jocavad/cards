@@ -69,28 +69,29 @@ public class BankApprovalController {
         }
         baServ.add(ba);
         status.setComplete();
-        return "redirect:/bankApproval"; 
+        return "redirect:/webapp/bankApproval"; 
     }
 
 //  edit/remove record    
     @RequestMapping(value = "bankApproval/record/modify", method = RequestMethod.POST)
     public String editBankApprovalRecord(@Valid @ModelAttribute("BaRec") BankApproval ba, BindingResult br,
-                                         ModelMap model, HttpServletRequest request, SessionStatus status){
-        if(br.hasErrors()){
+                                         ModelMap model, HttpServletRequest request, SessionStatus status
+            , @RequestParam(name = "mod",required = false)String mod,@RequestParam(name = "del",required = false)String del){
+        if(br.hasErrors() && request.getParameter("del")==null){
             return "bankApproval/bankApproval_record";
         }
         
         if(ba.getApprovalId() != null && request.getParameter("mod")!=null){
             baServ.modify(ba);
             status.setComplete();
-            return "redirect:/bankApproval/list";
+            return "redirect:/webapp/bankApproval/list";
         }
         else if(ba.getApprovalId() != null && request.getParameter("del")!=null){
             baServ.remove(ba.getApprovalId());
             status.setComplete();
-            return "redirect:/bankApproval";
+            return "redirect:/webapp/bankApproval";
         }
-        return "redirect:/bankApproval/list";
+        return "redirect:/webapp/bankApproval/list";
     }
 
 }

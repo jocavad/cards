@@ -22,7 +22,7 @@ public class CardsDAOImpl1 implements CardsDAO {
     public List<Cards> selectRange(Integer start, Integer resnum) {
         return em.createQuery("select c "
                             + "from Cards c "
-                            + "join fetch c.bankApproval "
+                            + "join fetch c.requests "
                             + "Order By c.cardId ",Cards.class)
                 .setFirstResult(start)
                 .setMaxResults(resnum).getResultList();
@@ -30,7 +30,12 @@ public class CardsDAOImpl1 implements CardsDAO {
     
     @Override
     public Cards select(Integer id) {
-        return em.find(Cards.class, id);
+         return em.createQuery("select c "
+                            + "from Cards c "
+                            + "left join fetch c.requests "
+                            + "where c.cardId = :id "
+                            + "Order By c.cardId " ,Cards.class).setParameter("id", id).getSingleResult();
+//        return em.find(Cards.class, id);
     }
 
     @Override

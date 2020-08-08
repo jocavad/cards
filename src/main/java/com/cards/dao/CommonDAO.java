@@ -17,6 +17,6 @@ public interface CommonDAO <T> {
    
    public void update(T obj);
    
-   public void insert(T obj);
+   public void insert(T obj);//return type integer. it is auto-generated and it needs to return that ID.
     
 }

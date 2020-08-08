@@ -1,7 +1,7 @@
 package com.cards.entity;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,8 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 
@@ -26,19 +24,19 @@ public class Cards implements Serializable {
 
      private Integer cardId;
      @NotNull(message = "{notNull}")
-     private BankApproval bankApproval;
+     private Requests requests;
      @Digits(fraction = 0, integer = 5 ,message = "{maxSize} {integer}")
      @NotNull(message = "{notNull}")
      private Integer pin;
      @NotNull(message = "{notNull}")
-     private Date issueDate;
+     private LocalDate issueDate;
 
     public Cards() {
     }
 
-    public Cards(Integer cardId, BankApproval bankApproval, Integer pin, Date issueDate) {
+    public Cards(Integer cardId, Requests requests, Integer pin, LocalDate issueDate) {
        this.cardId = cardId;
-       this.bankApproval = bankApproval;
+       this.requests = requests;
        this.pin = pin;
        this.issueDate = issueDate;
     }
@@ -56,16 +54,15 @@ public class Cards implements Serializable {
     }
 
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="APPROVAL_ID", nullable=false)
-    public BankApproval getBankApproval() {
-        return this.bankApproval;
+    @JoinColumn(name="REQUEST_ID", nullable=false)
+    public Requests getRequests() {
+        return this.requests;
     }
     
-    public void setBankApproval(BankApproval bankApproval) {
-        this.bankApproval = bankApproval;
+    public void setRequests(Requests requests) {
+        this.requests = requests;
     }
 
-    
     @Column(name="PIN", nullable=false, precision=5, scale=0)
     public Integer getPin() {
         return this.pin;
@@ -75,18 +72,14 @@ public class Cards implements Serializable {
         this.pin = pin;
     }
 
-    @Temporal(TemporalType.DATE)
     @Column(name="ISSUE_DATE", nullable=false, length=7)
-    public Date getIssueDate() {
+    public LocalDate getIssueDate() {
         return this.issueDate;
     }
     
-    public void setIssueDate(Date issueDate) {
+    public void setIssueDate(LocalDate issueDate) {
         this.issueDate = issueDate;
     }
-
-
-
 
 }
 

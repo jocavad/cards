@@ -30,10 +30,10 @@
 
 <div id="cliDialog" title="<s:message code="cli.ClientsTitle"/>">
              <c:if test="${cliPage>1}">
-             <input id="e5" name="p" value="<s:message code="Previous"/>" type="button" onclick="$('#cliDialog').load('<c:url value="/clients/list" /> #cliDialog',{cliPage:'${cliPage-1}', ltype:'${ltype}'} );"/>
+             <input id="e5" name="p" value="<s:message code="Previous"/>" type="button" onclick="$('#cliDialog').load('<c:url value="/webapp/clients/list" /> #cliDialog',{cliPage:'${cliPage-1}', ltype:'${ltype}'} );"/>
              </c:if>
              <c:if test="${cliLastPage==0}">
-             <input id="e4" name="n" value="<s:message code="Next"/>" type="button" onclick="$('#cliDialog').load('<c:url value="/clients/list" /> #cliDialog',{cliPage:'${cliPage+1}', ltype:'${ltype}'} );"/>
+             <input id="e4" name="n" value="<s:message code="Next"/>" type="button" onclick="$('#cliDialog').load('<c:url value="/webapp/clients/list" /> #cliDialog',{cliPage:'${cliPage+1}', ltype:'${ltype}'} );"/>
              </c:if>
         <table border="1">
               <tr>

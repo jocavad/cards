@@ -29,7 +29,12 @@ public class ClientsDAOImpl1 implements ClientsDAO {
  
    @Override
    public Clients select(Integer id){
-       return em.find(Clients.class, id);
+        return em.createQuery("select c "
+                            + "from Clients c "
+                            + "left join fetch c.requests "
+                            + "where c.clientId = :id "
+                            + "Order By c.clientId " ,Clients.class).setParameter("id", id).getSingleResult();
+//       return em.find(Clients.class, id);
    }
    
    @Override

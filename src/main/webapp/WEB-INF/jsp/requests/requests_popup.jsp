@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="f"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="s"%>
 <script>
@@ -30,10 +31,10 @@
 
 <div id="reqDialog" title="<s:message code="req.RequestsTitle"/>">
              <c:if test="${reqPage>1}">
-             <input id="e5" name="p" value="<s:message code="Previous"/>" type="button" onclick="$('#reqDialog').load('<c:url value="/requests/list" /> #reqDialog',{reqPage:'${reqPage-1}', ltype:'${ltype}'} );"/>
+             <input id="e5" name="p" value="<s:message code="Previous"/>" type="button" onclick="$('#reqDialog').load('<c:url value="/webapp/requests/list" /> #reqDialog',{reqPage:'${reqPage-1}', ltype:'${ltype}'} );"/>
              </c:if>
              <c:if test="${reqLastPage==0}">
-             <input id="e4" name="n" value="<s:message code="Next"/>" type="button" onclick="$('#reqDialog').load('<c:url value="/requests/list" /> #reqDialog',{reqPage:'${reqPage+1}', ltype:'${ltype}'} );"/>
+             <input id="e4" name="n" value="<s:message code="Next"/>" type="button" onclick="$('#reqDialog').load('<c:url value="/webapp/requests/list" /> #reqDialog',{reqPage:'${reqPage+1}', ltype:'${ltype}'} );"/>
              </c:if>
         <table border="1">
               <tr>
@@ -50,7 +51,9 @@
                     <td><c:out value="${i.clients.clientId}"/></td>
                     <td><c:out value="${i.employees.employeeId}"/></td>
                     <td><c:out value="${i.accountNumber}"/></td>
-                    <td><c:out value="${i.requestDate}"/></td>
+                    <fmt:parseDate value="${i.requestDate}"  type="date" pattern="yyyy-MM-dd" var="parsedDate" />
+                    <fmt:formatDate value="${parsedDate}" type="date" pattern="dd/MM/yyyy" var="fmtDate" />
+                    <td><c:out value="${fmtDate}"/></td>
                     <td><input id="e1" value="<s:message code="Select"/>" type="button" onClick="javascript:reqFunction(${i.requestId})"/></td>
                 </tr>
             </c:forEach>

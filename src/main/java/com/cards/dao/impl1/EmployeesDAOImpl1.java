@@ -29,7 +29,12 @@ public class EmployeesDAOImpl1 implements EmployeesDAO {
     
     @Override
     public Employees select(Integer id) {
-        return em.find(Employees.class, id);
+                return em.createQuery("select c "
+                            + "from Employees c "
+                            + "left join fetch c.requests "
+                            + "where c.employeeId = :id "
+                            + "Order By c.employeeId " ,Employees.class).setParameter("id", id).getSingleResult();
+//        return em.find(Employees.class, id);
     }
 
     @Override

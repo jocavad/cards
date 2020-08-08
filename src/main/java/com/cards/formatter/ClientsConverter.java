@@ -11,10 +11,10 @@ public class ClientsConverter implements Formatter<Clients>{
 
 private final ClientsService cliServ;
 
-    public ClientsConverter(ClientsService cliServ) {
-        this.cliServ = cliServ;
+    public ClientsConverter(ClientsService cls) {
+        this.cliServ = cls;
     }
-
+ 
     @Override
     public String print(Clients object, Locale locale) {
         return object.getClientId().toString();

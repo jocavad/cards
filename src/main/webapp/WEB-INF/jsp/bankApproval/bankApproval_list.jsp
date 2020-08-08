@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="f"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="s"%>
 <!DOCTYPE html>
@@ -9,8 +10,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
     <body>
-    <jsp:include page="/header"/>
-<script src="<c:url value="/js/jquery-3.4.1.js" />"></script>
+    <jsp:include page="/webapp/header"/>
+<script src="<c:url value="/webapp/js/jquery-3.4.1.js" />"></script>
 <div id="tab">
              <c:if test="${baPage>1}">
              <input id="e5" name="p" value="<s:message code="Previous"/>" type="button" onclick="location.href='<c:url value="list"><c:param name="baPage" value="${baPage-1}"/></c:url>'"/>
@@ -29,12 +30,14 @@
                 <tr>
                     <td><c:out value="${i.approvalId}"/></td>
                     <td><c:out value="${i.requests.requestId}"/></td>
-                    <td><c:out value="${i.approvalDate}"/></td>
+                    <fmt:parseDate value="${i.approvalDate}"  type="date" pattern="yyyy-MM-dd" var="parsedDate" />
+                    <fmt:formatDate value="${parsedDate}" type="date" pattern="dd/MM/yyyy" var="fmtDate" />
+                    <td><c:out value="${fmtDate}"/></td>
                     <td><input id="e1" value="<s:message code="Edit"/>" type="button" onclick="location.href='record/${i.approvalId}'"/></td>
                 </tr>
             </c:forEach>
           </table>
-        <input id="e4" name="bck" value="<s:message code="Back"/>" type="button" onclick="location.href='../'"/>
+        <input id="e4" name="bck" value="<s:message code="Back"/>" type="button" onclick="location.href='../../'"/>
         <input id="e3" name="crt" value="<s:message code="Create"/>" type="button" onclick="location.href='record/new'"/>
         </div> 
     </body>

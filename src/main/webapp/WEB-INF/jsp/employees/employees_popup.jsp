@@ -30,10 +30,10 @@
 
 <div id="empDialog" title="<s:message code="emp.EmployeesTitle"/>">
              <c:if test="${empPage>1}">
-             <input id="e5" name="p" value="<s:message code="Previous"/>" type="button" onclick="$('#empDialog').load('<c:url value="/employees/list" /> #empDialog',{empPage:'${empPage-1}', ltype:'${ltype}'} );"/>
+             <input id="e5" name="p" value="<s:message code="Previous"/>" type="button" onclick="$('#empDialog').load('<c:url value="/webapp/employees/list" /> #empDialog',{empPage:'${empPage-1}', ltype:'${ltype}'} );"/>
             </c:if>
              <c:if test="${empLastPage==0}">
-             <input id="e4" name="n" value="<s:message code="Next"/>" type="button" onclick="$('#empDialog').load('<c:url value="/employees/list" /> #empDialog',{empPage:'${empPage+1}', ltype:'${ltype}'} );"/>
+             <input id="e4" name="n" value="<s:message code="Next"/>" type="button" onclick="$('#empDialog').load('<c:url value="/webapp/employees/list" /> #empDialog',{empPage:'${empPage+1}', ltype:'${ltype}'} );"/>
              </c:if>
         <table border="1">
               <tr>

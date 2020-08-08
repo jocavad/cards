@@ -1,9 +1,7 @@
 package com.cards.entity;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,18 +10,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="BANK_APPROVAL"
     ,schema="CARDS"
-    , uniqueConstraints = @UniqueConstraint(columnNames="REQUEST_ID") 
 )
 public class BankApproval implements Serializable {
 
@@ -32,23 +25,16 @@ public class BankApproval implements Serializable {
      @NotNull(message = "{notNull}")
      private Requests requests;
      @NotNull(message = "{notNull}")
-     private Date approvalDate;
-     private Set<Cards> cards = new HashSet<>(0);
+     private LocalDate approvalDate;
 
     public BankApproval() {
     }
 
 	
-    public BankApproval(Integer approvalId, Requests requests, Date approvalDate) {
+    public BankApproval(Integer approvalId, Requests requests, LocalDate approvalDate) {
         this.approvalId = approvalId;
         this.requests = requests;
         this.approvalDate = approvalDate;
-    }
-    public BankApproval(Integer approvalId, Requests requests, Date approvalDate, Set<Cards> cards) {
-       this.approvalId = approvalId;
-       this.requests = requests;
-       this.approvalDate = approvalDate;
-       this.cards = cards;
     }
    
     @Id 
@@ -64,7 +50,7 @@ public class BankApproval implements Serializable {
     }
 
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="REQUEST_ID", unique=true, nullable=false)
+    @JoinColumn(name="REQUEST_ID", nullable=false)
     public Requests getRequests() {
         return this.requests;
     }
@@ -73,27 +59,14 @@ public class BankApproval implements Serializable {
         this.requests = requests;
     }
 
-    @Temporal(TemporalType.DATE)
     @Column(name="APPROVAL_DATE", nullable=false, length=7)
-    public Date getApprovalDate() {
+    public LocalDate getApprovalDate() {
         return this.approvalDate;
     }
     
-    public void setApprovalDate(Date approvalDate) {
+    public void setApprovalDate(LocalDate approvalDate) {
         this.approvalDate = approvalDate;
     }
-
-    @OneToMany(fetch=FetchType.LAZY, mappedBy="bankApproval")
-    public Set<Cards> getCards() {
-        return this.cards;
-    }
-    
-    public void setCards(Set<Cards> cards) {
-        this.cards = cards;
-    }
-
-
-
 
 }
 

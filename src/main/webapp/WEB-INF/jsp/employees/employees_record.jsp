@@ -26,6 +26,7 @@
             <input id="b3" type="submit" value="<s:message code="Delete"/>" name="del"/>
             </c:if>
         </f:form>
-            <input id="b4" type="submit" value="<s:message code="Back"/>" name="bck" onclick="location.href='<c:url value="../list"><c:param name="empPage" value="${empPage}"/></c:url>'"/>
+            <input id="b4" type="submit" value="<s:message code="Back"/>" name="bck" onclick="location.href='<c:url value="../../employees"><c:param name="empPage" value="${empPage}"/></c:url>'"/>
+            <!--<input id="b4" type="submit" value="<s:message code="Back"/>" name="bck" onclick="location.href='<c:url value="../list"><c:param name="empPage" value="${empPage}"/></c:url>'"/>-->
     </body>
 </html>

@@ -68,27 +68,27 @@ public class RequestsController {
         }
         reqServ.add(req);
         status.setComplete();
-        return "redirect:/requests";
+        return "redirect:/webapp/requests";
     }
     
 //  edit/remove record
     @RequestMapping(value = "requests/record/modify", method = RequestMethod.POST)
     public String editRequestsRecord(@Valid @ModelAttribute("ReqRec") Requests req, BindingResult br,
                                     ModelMap model, HttpServletRequest request, SessionStatus status){
-        if(br.hasErrors()){
+        if(br.hasErrors() && request.getParameter("del")==null){
             return "requests/requests_record";
         }
         if(req.getRequestId() != null && request.getParameter("mod")!=null){
             reqServ.modify(req);
             status.setComplete();
-            return "redirect:/requests/list";
+            return "redirect:/webapp/requests/list";
         }
         else if(req.getRequestId() != null && request.getParameter("del")!=null){
             reqServ.remove(req.getRequestId());
             status.setComplete();
-            return "redirect:/requests";
+            return "redirect:/webapp/requests";
         }
-        return "redirect:/requests/list";
+        return "redirect:/webapp/requests/list";
     }
 
 }

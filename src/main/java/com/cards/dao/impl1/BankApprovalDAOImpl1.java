@@ -30,7 +30,12 @@ public class BankApprovalDAOImpl1 implements BankApprovalDAO {
     
     @Override
     public BankApproval select(Integer id) {
-        return em.find(BankApproval.class, id);
+        return em.createQuery("select c "
+                            + "from BankApproval c "
+                            + "left join fetch c.requests "
+                            + "where c.approvalId = :id "
+                            + "Order By c.approvalId " ,BankApproval.class).setParameter("id", id).getSingleResult();
+//        return em.find(BankApproval.class, id);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.cards.entity;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
@@ -15,8 +15,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -37,27 +35,29 @@ public class Requests implements Serializable {
      @Size(max = 20 ,message = "{maxSize} {max}")
      private String accountNumber;
      @NotNull(message = "{notNull}")
-     private Date requestDate;
+     private LocalDate requestDate;
      private Set<BankApproval> bankApproval = new HashSet<>(0);
-
+     private Set<Cards> cards = new HashSet<>(0);
+     
     public Requests() {
     }
 
 	
-    public Requests(Integer requestId, Clients clients, Employees employees, String accountNumber, Date requestDate) {
+    public Requests(Integer requestId, Clients clients, Employees employees, String accountNumber, LocalDate requestDate) {
         this.requestId = requestId;
         this.clients = clients;
         this.employees = employees;
         this.accountNumber = accountNumber;
         this.requestDate = requestDate;
     }
-    public Requests(Integer requestId, Clients clients, Employees employees, String accountNumber, Date requestDate, Set<BankApproval> bankApproval) {
+    public Requests(Integer requestId, Clients clients, Employees employees, String accountNumber, LocalDate requestDate, Set<BankApproval> bankApproval, Set<Cards> cards) {
        this.requestId = requestId;
        this.clients = clients;
        this.employees = employees;
        this.accountNumber = accountNumber;
        this.requestDate = requestDate;
        this.bankApproval = bankApproval;
+       this.cards = cards;
     }
    
     @Id 
@@ -92,7 +92,6 @@ public class Requests implements Serializable {
         this.employees = employees;
     }
 
-    
     @Column(name="ACCOUNT_NUMBER", nullable=false, length=60)
     public String getAccountNumber() {
         return this.accountNumber;
@@ -102,13 +101,12 @@ public class Requests implements Serializable {
         this.accountNumber = accountNumber;
     }
 
-    @Temporal(TemporalType.DATE)
     @Column(name="REQUEST_DATE", nullable=false, length=7)
-    public Date getRequestDate() {
+    public LocalDate getRequestDate() {
         return this.requestDate;
     }
     
-    public void setRequestDate(Date requestDate) {
+    public void setRequestDate(LocalDate requestDate) {
         this.requestDate = requestDate;
     }
 
@@ -121,9 +119,14 @@ public class Requests implements Serializable {
         this.bankApproval = bankApproval;
     }
 
-
-
-
+    @OneToMany(fetch=FetchType.LAZY, mappedBy="requests")
+    public Set<Cards> getCards() {
+        return this.cards;
+    }
+    
+    public void setCards(Set<Cards> cards) {
+        this.cards = cards;
+    }
 }
 
 

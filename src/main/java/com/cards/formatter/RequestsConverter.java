@@ -11,10 +11,10 @@ public class RequestsConverter implements Formatter<Requests>{
 
 private final RequestsService reqServ;
 
-    public RequestsConverter(RequestsService reqServ) {
-        this.reqServ = reqServ;
+    public RequestsConverter(RequestsService res) {
+        this.reqServ = res;
     }
-
+    
     @Override
     public String print(Requests object, Locale locale) {
         return object.getRequestId().toString();

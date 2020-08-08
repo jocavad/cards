@@ -11,8 +11,8 @@ public class BankApprovalConverter implements Formatter<BankApproval>{
 
 private final BankApprovalService baServ;
 
-    public BankApprovalConverter(BankApprovalService baServ) {
-        this.baServ = baServ;
+    public BankApprovalConverter(BankApprovalService bas) {
+        this.baServ = bas;
     }
 
     @Override

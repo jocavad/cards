@@ -9,8 +9,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
     <body>
-    <jsp:include page="/header"/>
-<script src="<c:url value="/js/jquery-3.4.1.js" />"></script>
+    <jsp:include page="/webapp/header"/>
+<script src="<c:url value="/webapp/js/jquery-3.4.1.js" />"></script>
 <div id="tab">
              <c:if test="${cliPage>1}">
              <input id="e5" name="p" value="<s:message code="Previous"/>" type="button" onclick="location.href='<c:url value="list"><c:param name="cliPage" value="${cliPage-1}"/></c:url>'"/>
@@ -40,7 +40,7 @@
                 </tr>
             </c:forEach>
           </table>
-        <input id="e4" name="bck" value="<s:message code="Back"/>" type="button" onclick="location.href='../'"/>
+        <input id="e4" name="bck" value="<s:message code="Back"/>" type="button" onclick="location.href='../../'"/>
         <input id="e3" name="crt" value="<s:message code="Create"/>" type="button" onclick="location.href='record/new'"/>
         </div> 
     </body>

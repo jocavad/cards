@@ -11,8 +11,8 @@ public class CardsConverter implements Formatter<Cards>{
 
 private final CardsService crdServ;
 
-    public CardsConverter(CardsService crdServ) {
-        this.crdServ = crdServ;
+    public CardsConverter(CardsService cds) {
+        this.crdServ = cds;
     }
 
     @Override

@@ -32,7 +32,7 @@ public class Clients implements Serializable {
      @Size(max = 50 ,message = "{maxSize} {max}")
      @NotEmpty(message = "{notNull}")
      private String address;
-     @Email()
+     @Email(regexp = "()|(^([a-zA-Z0-9]){3,10}(@)([a-z]){3,10}(\\.)?(com|net)$)", message = "{emailFormat} -> [a-z,0-9](3-10)@[a-z](3-10).com/net")
      @Size(max = 30 ,message = "{maxSize} {max}")
      private String email;
      @Size(max = 15 ,message = "{maxSize} {max}")
@@ -102,7 +102,7 @@ public class Clients implements Serializable {
     }
 
     
-    @Column(name="EMAIL", length=120)
+    @Column(name="EMAIL", length=120, nullable = true)
     public String getEmail() {
         return this.email;
     }

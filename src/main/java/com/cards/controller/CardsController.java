@@ -22,7 +22,7 @@ import org.springframework.web.bind.support.SessionStatus;
 public class CardsController {
  
     private final CardsService crdServ;
-
+ 
     public CardsController(@Qualifier("CRD_SERV") CardsService crdServ) {
         this.crdServ = crdServ;
     }
@@ -69,29 +69,29 @@ public class CardsController {
         }
         crdServ.add(crd);
         status.setComplete();
-        return "redirect:/cards";   
+        return "redirect:/webapp/cards";   
     }
 
-//  edit/remove record    
+//  edit/remove record
     @RequestMapping(value = "cards/record/modify", method = RequestMethod.POST)
     public String editCardsRecord(@Valid @ModelAttribute("CrdRec") Cards crd, BindingResult br,
                                   ModelMap model, HttpServletRequest request, SessionStatus status){
-        if(br.hasErrors()){
+        if(br.hasErrors() && request.getParameter("del")==null){
             return "cards/cards_record";
         }
         
         if(crd.getCardId() != null && request.getParameter("mod")!=null){
             crdServ.modify(crd);
             status.setComplete();
-            return "redirect:/cards/list";
+            return "redirect:/webapp/cards/list";
         }
         else if(crd.getCardId() != null && request.getParameter("del")!=null){
             crdServ.remove(crd.getCardId());
             status.setComplete();
-            return "redirect:/cards";
+            return "redirect:/webapp/cards";
         }
         
-        return "redirect:/cards/list";
+        return "redirect:/webapp/cards/list";
     }
 
 }

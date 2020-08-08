@@ -69,28 +69,28 @@ public class ClientsController {
         }
         cliServ.add(cli);
         status.setComplete();
-        return "redirect:/clients";    
+        return "redirect:/webapp/clients";    
     }
 
 //  edit/remove record    
     @RequestMapping(value = "clients/record/modify", method = RequestMethod.POST)
     public String editClientsRecord(@Valid @ModelAttribute("CliRec") Clients cli, BindingResult br,
                                     ModelMap model, HttpServletRequest request, SessionStatus status){
-        if(br.hasErrors()){
+        if(br.hasErrors() && request.getParameter("del")==null){
             return "clients/clients_record";
         }
         
         if(cli.getClientId() != null && request.getParameter("mod")!=null){
             cliServ.modify(cli);
             status.setComplete();
-            return "redirect:/clients/list";
+            return "redirect:/webapp/clients/list";
         }
         else if(cli.getClientId() != null && request.getParameter("del")!=null){
             cliServ.remove(cli.getClientId());
             status.setComplete();
-            return "redirect:/clients";
+            return "redirect:/webapp/clients";
         }
-        return "redirect:/clients/list";
+        return "redirect:/webapp/clients/list";
     }
 
 }

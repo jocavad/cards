@@ -9,11 +9,11 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
     <body>
-    <jsp:include page="/header"/>
-            <input id="e1" value="<s:message code="cli.ClientsTitle"/>" type="button" onclick="location.href='<c:url value="/clients"/>'"/>
-            <input id="e2" value="<s:message code="req.RequestsTitle"/>" type="button" onclick="location.href='<c:url value="/requests"/>'"/>
-            <input id="e3" value="<s:message code="emp.EmployeesTitle"/>" type="button" onclick="location.href='<c:url value="/employees"/>'"/>
-            <input id="e4" value="<s:message code="ba.BankApprovalTitle"/>" type="button" onclick="location.href='<c:url value="/bankApproval"/>'"/>
-            <input id="e5" value="<s:message code="crd.CardsTitle"/>" type="button" onclick="location.href='<c:url value="/cards"/>'"/>
+    <jsp:include page="/webapp/header"/>
+            <input id="e1" value="<s:message code="cli.ClientsTitle"/>" type="button" onclick="location.href='<c:url value="/webapp/clients"/>'"/>
+            <input id="e2" value="<s:message code="req.RequestsTitle"/>" type="button" onclick="location.href='<c:url value="/webapp/requests"/>'"/>
+            <input id="e3" value="<s:message code="emp.EmployeesTitle"/>" type="button" onclick="location.href='<c:url value="/webapp/employees"/>'"/>
+            <input id="e4" value="<s:message code="ba.BankApprovalTitle"/>" type="button" onclick="location.href='<c:url value="/webapp/bankApproval"/>'"/>
+            <input id="e5" value="<s:message code="crd.CardsTitle"/>" type="button" onclick="location.href='<c:url value="/webapp/cards"/>'"/>
     </body>
 </html>

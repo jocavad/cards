@@ -31,7 +31,15 @@ public class RequestsDAOImpl1 implements RequestsDAO {
     
     @Override
     public Requests select(Integer id) {
-        return em.find(Requests.class, id);
+                return em.createQuery("select c "
+                            + "from Requests c "
+                            + "left join fetch c.employees "
+                            + "left join fetch c.clients "
+                            + "left join fetch c.bankApproval "
+                            + "left join fetch c.cards "
+                            + "where c.requestId = :id "
+                            + "Order By c.requestId " ,Requests.class).setParameter("id", id).getSingleResult();
+//        return em.find(Requests.class, id);
     }
 
     @Override

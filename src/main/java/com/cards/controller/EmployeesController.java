@@ -70,28 +70,28 @@ public class EmployeesController {
         }
         empServ.add(emp);
         status.setComplete();
-        return "redirect:/employees";        
+        return "redirect:/webapp/employees";        
     }
 
 //  edit/remove record
     @RequestMapping(value = "employees/record/modify", method = RequestMethod.POST)
     public String editEmployeesRecord(@Valid @ModelAttribute("EmpRec") Employees emp, BindingResult br,
                                       ModelMap model, HttpServletRequest request, SessionStatus status){
-        if(br.hasErrors()){
+        if(br.hasErrors() && request.getParameter("del")==null){
             return "employees/employees_record";
         }
 
         if(emp.getEmployeeId() != null && request.getParameter("mod")!=null){
             empServ.modify(emp);
             status.setComplete();
-            return "redirect:/employees/list";
+            return "redirect:/webapp/employees/list";
         }
         else if(emp.getEmployeeId() != null && request.getParameter("del")!=null){
             empServ.remove(emp.getEmployeeId());
             status.setComplete();
-            return "redirect:/employees";
+            return "redirect:/webapp/employees";
         }
-        return "redirect:/employees/list";
+        return "redirect:/webapp/employees/list";
     }
 
 }
