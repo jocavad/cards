@@ -1,7 +1,7 @@
 # Payment card issuing process 
 
 This is an oversimplified application of a payment card issuing process that serves more as Spring-JPA-REST example with some of its 
-components used. Application might be updated in the future with some additional features. Custom HAL JSON library was used.
+components used. Application might be updated in the future with some additional features. Custom [HAL JSON](https://github.com/jocavad/HAL-Imp) library was used.
 
 ## Database schema overview: 
 
