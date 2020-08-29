@@ -48,14 +48,13 @@ COMMENT ON COLUMN Bank_Approval.Approval_Id
 IS
   'APPROVAL PER REQUEST' ;
   ALTER TABLE Bank_Approval ADD CONSTRAINT Bank_Approval_PK PRIMARY KEY ( Approval_Id ) ;
-  ALTER TABLE Bank_Approval ADD CONSTRAINT Bank_Appr_Req_UN UNIQUE ( Request_Id ) ;
 
 CREATE TABLE Cards
   (
-    Card_Id     NUMBER (5) NOT NULL ,
-    PIN         NUMBER (5) NOT NULL ,
-    Issue_Date  DATE NOT NULL ,
-    Approval_Id NUMBER (5) NOT NULL
+    Card_Id    NUMBER (5) NOT NULL ,
+    PIN        NUMBER (5) NOT NULL ,
+    Issue_Date DATE NOT NULL ,
+    Request_Id NUMBER (5) NOT NULL
   ) ;
 ALTER TABLE Cards ADD CONSTRAINT Cards_PK PRIMARY KEY ( Card_Id ) ;
 
@@ -91,11 +90,12 @@ CREATE TABLE Requests
 COMMENT ON COLUMN Requests.Request_id
 IS
   'REQUEST PER CARD' ;
-  ALTER TABLE Requests ADD CONSTRAINT Requests_PK PRIMARY KEY ( Request_id ) ;
+
+ALTER TABLE Requests ADD CONSTRAINT Requests_PK PRIMARY KEY ( Request_id ) ;
 
 ALTER TABLE Bank_Approval ADD CONSTRAINT Bank_Appr_Client_Req_FK FOREIGN KEY ( Request_Id ) REFERENCES Requests ( Request_id ) ;
 
-ALTER TABLE Cards ADD CONSTRAINT Card_Bank_Appr_FK FOREIGN KEY ( Approval_Id ) REFERENCES Bank_Approval ( Approval_Id ) ;
+ALTER TABLE Cards ADD CONSTRAINT Cards_Requests_FK FOREIGN KEY ( Request_Id ) REFERENCES Requests ( Request_id ) ;
 
 ALTER TABLE Requests ADD CONSTRAINT Requests_Clients_FK FOREIGN KEY ( Client_Id ) REFERENCES Clients ( Client_Id ) ;
 
@@ -156,9 +156,3 @@ Insert into CARDS.CARDS (CARD_ID,PIN,ISSUE_DATE,APPROVAL_ID) values ('1','12345'
 Insert into CARDS.CARDS (CARD_ID,PIN,ISSUE_DATE,APPROVAL_ID) values ('2','12346',to_date('21-AUG-2019','DD-MON-yyyy'),'2');
 Insert into CARDS.CARDS (CARD_ID,PIN,ISSUE_DATE,APPROVAL_ID) values ('3','54321',to_date('21-AUG-2019','DD-MON-yyyy'),'3');
 Insert into CARDS.CARDS (CARD_ID,PIN,ISSUE_DATE,APPROVAL_ID) values ('4','11133',to_date('21-AUG-2019','DD-MON-yyyy'),'4');
-
-
-
-
-
-
